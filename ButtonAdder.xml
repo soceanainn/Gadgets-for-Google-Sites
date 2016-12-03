@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+	Author: Séamus Ó Ceanainn
+	Email: seamusoceanainn@gmail.com
+	Date: 20/06/2016
+	Title: Button Creator
+	Description: 
+	Google Gadget that creates a button, allowing user to select a colour,	add	button 
+	text and specify a link that the site will redirect to when the button is clicked.
+-->
+<Module>
+	<ModulePrefs title="ButtonCreator" height="75"/>
+	<UserPref name="mytitle" display_name="Title" default_value="Button Text"/>
+	<UserPref name="linkto" display_name="Link to (must be https://)" default_value="#"/>
+	<UserPref name="buttoncolor" display_name="Color" default_value="Navy" datatype="enum">
+		<EnumValue value="Red"/>
+		<EnumValue value="Blue"/>
+		<EnumValue value="Green"/>
+		<EnumValue value="Navy"/>
+		<EnumValue value="Orange"/>
+		<EnumValue value="White"/>
+		<EnumValue value="Wine"/>
+	</UserPref>
+	<Content type="html">
+		<![CDATA[
+			<style> 
+				body{ 
+					overflow:hidden; 
+				} 
+				.btn{
+					padding: 14px 25px;
+					border-radius: 10px
+				}
+				.btn-white { 
+					color: #333;
+					background-color: #fff;
+					border-color: #ccc;
+				} 
+				.btn-white:hover{
+					color: #333;
+					background-color: #d4d4d4;
+					border-color: #8c8c8c;
+				} 
+				.btn-navy { 
+					color: #fff;
+					background-color:#337ab7; 
+					border-color: #2e6da4; 
+				} 
+				.btn-navy:hover { 
+					color: #fff; 
+					background-color: #286090;
+					border-color: #204d74; 
+				} 
+				.btn-green { 
+					color: #fff;
+					background-color: #5cb85c;
+					border-color: #4cae4c;
+				}
+				.btn-green:hover {
+					color: #fff;
+					background-color: #449d44; 
+					border-color: #398439;
+				}
+				.btn-blue { 
+					color: #fff;
+					background-color: #5bc0de;
+					border-color: #46b8da;
+				}
+				.btn-blue:hover { 
+					color: #fff;
+					background-color: #31b0d5;
+					border-color: #269abc; 
+				} 
+				.btn-orange { 
+					color: #fff;
+					background-color: #f0ad4e;
+					border-color: #eea236; 
+				} 
+				.btn-orange:hover {
+					color: #fff;
+					background-color: #ec971f; 
+					border-color: #d58512; 
+				} 
+				.btn-wine { 
+					color: #fff;
+					background-color: #d9534f;
+					border-color: #d43f3a;
+				} 
+				.btn-wine:hover {
+					color: #fff;
+					background-color: #c9302c;
+					border-color: #ac2925;
+				} 
+				.btn-red { 
+					color: #fff;
+					background-color: #f44336;
+					border-color: #d43f3a; 
+				}
+				.btn-red:hover { 
+					color: #fff; 
+					background-color: red; 
+					border-color: #ac2925; 
+				}
+				a{
+					margin: auto; 
+					padding: 10px;
+					text-align: center;
+					color: #fff;
+					text-decoration: none;
+				}
+			</style> 
+			<body id="insert"> </body> 
+			<script type="text/javascript"> 
+				// Get userprefs 
+				var prefs = new gadgets.Prefs(); 
+				function displayButton () { 
+				
+					var html = ""; 
+					var buttoncolour = "";
+					
+					//Get button colour
+					if (prefs.getString("buttoncolor") === "Red") buttoncolour="btn-red"; 
+					if (prefs.getString("buttoncolor") === "Blue") buttoncolour="btn-blue";
+					if (prefs.getString("buttoncolor") === "Green") buttoncolour="btn-green";
+					if (prefs.getString("buttoncolor") === "Navy") buttoncolour="btn-navy"; 
+					if (prefs.getString("buttoncolor") === "Orange") buttoncolour="btn-orange";
+					if (prefs.getString("buttoncolor") === "White") buttoncolour="btn-white";
+					if (prefs.getString("buttoncolor") === "Wine") buttoncolour="btn-wine";
+
+									
+					//Generates HTML code for button linking to "linkto" with colour of "buttoncolour", displaying text "mytitle"
+					html += '<a> <div onclick="top.location.href=(' + "'" + prefs.getString("linkto") +"')" + '"' + 'class="btn ' + buttoncolour + '">'; 
+					html += prefs.getString("mytitle") + '</div> </a>';
+					
+					//Inserts HTML code between <body> tags above
+					var element = document.getElementById('insert'); 
+					element.innerHTML = html;
+				} 
+				
+				// Pass the userprefs for this module instance to the function
+				// (allows users to include multiple module instances on their page) 
+				gadgets.util.registerOnLoadHandler(displayButton);
+			</script>
+		]]>
+	</Content>
+</Module>
