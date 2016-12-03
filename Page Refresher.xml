@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	Author: Séamus Ó Ceanainn
+	Email: seamusoceanainn@gmail.com
+	Title: Page Refresher
+	Description: 
+	Google Gadget that sets an automatic refresh of the page at an interval specified by the user,
+	to allow the page that is updated very frequently to update itself automatically
+-->
+<Module>
+	<ModulePrefs width="100%" height="10" title="Page Refresher" description="Make your page update itself automatically" author="Séamus Ó Ceanainn" author_email="seamusoceanainn@gmail.com">
+	</ModulePrefs>
+	<UserPref name="Timeout" display_name='Please enter the number of seconds between each refresh (minimum 5 seconds)' required="true" default_value="30"/>
+	<Content type="html">
+	<![CDATA[
+	<body>
+	</body>
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<style>
+	</style>
+	 
+	 	<script type="text/javascript"> 
+				// Get userprefs 
+				var prefs = new gadgets.Prefs(); 
+							
+				function refresher() {
+					var params = {};  
+					params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;  
+					var timeout = prefs.getInt("Timeout");
+					if (timeout < 5) timeout = 5;
+					setTimeout(function (){
+						window.location.reload(true);
+					}, timeout *1000);
+				};
+				
+				gadgets.util.registerOnLoadHandler(refresher);
+		</script>		
+					
+	]]>
+	</Content>
+</Module>
