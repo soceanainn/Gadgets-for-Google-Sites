@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	Author: Séamus Ó Ceanainn
+	Email: seamusoceanainn@gmail.com
+	Title: Clock (Time / Date Display)
+	Description: 
+	Google Gadget that adds a time/date display to the site
+-->
+<Module>
+	<ModulePrefs height="80" width="100%" title="Clock" description="Time & Date Display" author="Séamus Ó Ceanainn" author_email="seamusoceanainn@gmail.com">
+		<Require feature="dynamic-height"/>
+	</ModulePrefs>
+,	<UserPref name="clockColor" display_name="Please enter hex code for Time/Date Background Color" default_value= "#fff"/>
+	<UserPref name="clockTextColor" display_name="Please enter hex code for Time/Date Text Color" default_value= "#000"/>
+	<Content type="html">
+	<![CDATA[
+	<body width="100%" height="100%" style="margin: auto; padding: auto;">
+		<div id="container" width="90%" height="90%">
+			<div id="date"> </div>
+		</div>
+	</body>
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<style>
+		#date{
+		  text-align: center;
+		}
+		#container{
+		  border-style: solid;
+		  border-radius: 20px;
+		  margin: auto;
+		  padding: auto;
+		  min-width: 90%;
+		  min-height: 90%;
+		  vertical-align: middle;
+		}
+	 </style>
+	 
+	 	<script type="text/javascript"> 
+				// Get userprefs 
+				var prefs = new gadgets.Prefs(); 
+				function call(){
+					setColors();
+					setTime();
+					setInterval(function(){
+						setTime();
+					}, 10000);
+
+				};
+				
+				function setColors(){
+					var element = document.getElementById('container');
+					element.style.backgroundColor= prefs.getString("clockColor")
+					element.style.color= prefs.getString("clockTextColor")
+				};
+
+				function setTime(){
+					var date= new Date();
+					var d= date.toString();
+					var split= d.split(" ");
+					var out= new Array();
+					
+					// Change how day is formatted
+					if ( split[0]==="Mon") out[0]="Monday";
+					else if ( split[0]==="Tue") out[0]="Tuesday";
+					else if ( split[0]==="Wed") out[0]="Wednesday";
+					else if ( split[0]==="Thu") out[0]="Thurssday";
+					else if ( split[0]==="Fri") out[0]="Friday";
+					else if ( split[0]==="Sat") out[0]="Saturday";
+					else if ( split[0]==="Sun") out[0]="Sunday";
+					
+					
+					//	**European dd/mm
+					out[1]=split[2];
+					out[1] +="/";
+					
+					//	**American mm/dd
+					//out[1]="";
+					
+					// Change how month is formatted	
+					if (split[1]==="Jan") out[1]+="01";
+					else if ( split[1]==="Feb") out[1]+="02";
+					else if ( split[1]==="Mar") out[1]+="03";
+					else if ( split[1]==="Apr") out[1]+="04";
+					else if ( split[1]==="May") out[1]+="05";
+					else if ( split[1]==="Jun") out[1]+="06";
+					else if ( split[1]==="Jul") out[1]+="07";
+					else if ( split[1]==="Aug") out[1]+="08";
+					else if ( split[1]==="Sep") out[1]+="09";
+					else if ( split[1]==="Oct") out[1]+="10";
+					else if ( split[1]==="Nov") out[1]+="11";
+					else if ( split[1]==="Dec") out[1]+="12";
+					
+					//	**American /mm/dd
+					// out[1]+=split[2];
+					
+					var split2 = split[4].split(":");
+					out[2]= split2[0] + ":" + split2[1];
+					
+					var element= document.getElementById('date');
+					element.innerHTML = "<h3>" + out[0] + " " + out[1] + " " + out[2] + "</h3>";
+				};
+				
+				gadgets.util.registerOnLoadHandler(call);
+		</script>		
+					
+	]]>
+	</Content>
+</Module>
