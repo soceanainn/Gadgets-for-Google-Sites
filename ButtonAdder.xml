@@ -2,14 +2,13 @@
 <!--
 	Author: Séamus Ó Ceanainn
 	Email: seamusoceanainn@gmail.com
-	Date: 20/06/2016
 	Title: Button Creator
 	Description: 
 	Google Gadget that creates a button, allowing user to select a colour,	add	button 
 	text and specify a link that the site will redirect to when the button is clicked.
 -->
 <Module>
-	<ModulePrefs title="ButtonCreator" height="75"/>
+	<ModulePrefs title="ButtonCreator" height="75" author="Séamus Ó Ceanainn" author_email="seamusoceanainn@gmail.com">
 	<UserPref name="mytitle" display_name="Title" default_value="Button Text"/>
 	<UserPref name="linkto" display_name="Link to (must be https://)" default_value="#"/>
 	<UserPref name="buttoncolor" display_name="Color" default_value="Navy" datatype="enum">
